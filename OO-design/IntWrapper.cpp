@@ -18,7 +18,6 @@ const IntWrapper &IntWrapper::operator=(const IntWrapper &rhs)
 
 bool IntWrapper::isLessThan(IComparable& rhs)
 {
-    std::cout << "islessthan";
     if(this->Integer < dynamic_cast<IntWrapper&>(rhs).Integer)
         return true;
 
