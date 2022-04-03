@@ -5,7 +5,8 @@
 using namespace std;
 
 //sort the vector using isLessThan() (TimSort)
-const vector<IComparable*>& sort(vector<IComparable*>& list)
+//const vector<IComparable*>&
+ void sort(vector<IComparable*>& list)
 {
     int left = 0;
     int mid = list.size() / 2;
@@ -14,26 +15,27 @@ const vector<IComparable*>& sort(vector<IComparable*>& list)
     auto const subVectorTwo = right - mid;
 
     // Create temp arrays
-    auto leftVector = new vector<IComparable*>[subVectorOne],
-            rightVector = new vector<IComparable*>[subVectorTwo];
+    vector<IComparable*> leftVector = vector<IComparable*>(subVectorOne),
+            rightVector = vector<IComparable*>(subVectorTwo);
 
     // Copy data to temp arrays leftArray[] and rightArray[]
     for (auto i = 0; i < subVectorOne; i++)
-        leftVector[i].push_back(list[left + i]);
+        leftVector.push_back(list[left + i]);
     for (auto j = 0; j < subVectorTwo; j++)
-        rightVector[j].push_back(list[mid + 1 + j]);
+        rightVector.push_back(list[mid + 1 + j]);
 
     auto indexOfSubVectorOne = 0, // Initial index of first sub-array
     indexOfSubVectorTwo = 0; // Initial index of second sub-array
     int indexOfMergedVector = left; // Initial index of merged array
 
     // Merge the temp arrays back into array[left..right]
+//    IComparable* pt = leftVector[indexOfSubVectorOne];
+//    cout << typeid(leftVector).name();
     while (indexOfSubVectorOne < subVectorOne && indexOfSubVectorTwo < subVectorTwo) {
-        if (leftVector[indexOfSubVectorOne]->isLessThan(rightVector[indexOfSubVectorTwo])) {
-            list[indexOfMergedVector] = leftVector[indexOfSubVectorOne]);
+        if (leftVector[indexOfSubVectorOne]->isLessThan(*rightVector[indexOfSubVectorTwo])) {
+            list[indexOfMergedVector] = leftVector[indexOfSubVectorOne];
             indexOfSubVectorOne++;
-        }
-        else {
+        } else {
             list[indexOfMergedVector] = rightVector[indexOfSubVectorTwo];
             indexOfSubVectorTwo++;
         }
@@ -53,6 +55,7 @@ const vector<IComparable*>& sort(vector<IComparable*>& list)
         indexOfSubVectorTwo++;
         indexOfMergedVector++;
     }
+
 }
 
 //verifies the sort
@@ -69,7 +72,7 @@ const vector<IComparable*>& sort(vector<IComparable*>& list)
 //}
 
 int main() {
-    vector<IntWrapper*> intVec;
+    vector<IComparable*> intVec;
 
 //    IntWrapper* x = new IntWrapper(100);
 //    IntWrapper* y = new IntWrapper(200);
@@ -83,6 +86,13 @@ int main() {
         cout << ptrInt->getInteger() << " ";
         intVec.push_back(ptrInt);
     }
+
+    sort(intVec);
+
+//    for(int i = 0; i < 10; i++)
+//    {
+//        cout << dynamic_cast<IntWrapper*>[i];
+//    }
 
     return 0;
 }
